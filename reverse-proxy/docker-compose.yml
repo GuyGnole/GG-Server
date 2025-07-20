@@ -6,15 +6,17 @@ services:
     container_name: traefik
     restart: always
     ports:
-      - "80:80"        # HTTP
-      - "443:443"      # HTTPS
+      - "80:80"
+      - "443:443"
+    env_file:
+      - .env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yml:/traefik.yml:ro
       - ./acme.json:/acme.json
-    labels:
-      - "traefik.enable=true"
+    networks:
+      - web
 
 networks:
-  default:
-    name: web
+  web:
+    external: true
