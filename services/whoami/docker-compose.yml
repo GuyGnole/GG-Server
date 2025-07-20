@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  whoami:
+    image: containous/whoami
+    container_name: whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.guy-gnole.fr`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=ovh"
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
